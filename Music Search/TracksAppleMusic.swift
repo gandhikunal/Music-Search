@@ -10,77 +10,72 @@
 import Foundation
 
 class TopLevelResponse: Decodable {
-    var results: Results
+    var results: Result
+    enum CodingKeys: String, CodingKey
+    {
+        case results = "results"
+    }
     
-    init(results: Results) {
+    init(results: Result) {
         self.results = results
     }
 }
 
-class Results: Decodable {
+class Result: Decodable {
 
-    var songs: Songs
-    init(songs: Songs) {
+    var songs: Song
+    enum CodingKeys: String, CodingKey
+    {
+        case songs = "songs"
+    }
+    init(songs: Song) {
         self.songs = songs
     }
 }
 
-class Songs: Decodable {
-    var data: [TracksWrapper]
-    init(data: [TracksWrapper]) {
+class Song: Decodable {
+    var data: [Attributes]
+    enum CodingKeys: String, CodingKey
+    {
+        case data = "data"
+    }
+    init(data: [Attributes]) {
         self.data = data
     }
 }
 
-class TracksWrapper: Decodable {
-    var attributes: [TracksAAPI]
-    init(attributes: [TracksAAPI]) {
-        self.attributes = attributes
-    }
- 
-}
 
-class PreviewUrl: Decodable {
-    var url: String
-    init(url: String) {
-        self.url = url
+class Attributes: Decodable {
+    var attributes: TracksAAPI
+    enum CodingKeys: String, CodingKey
+    {
+        case attributes = "attributes"
+    }
+    init(attributes: TracksAAPI) {
+        self.attributes = attributes
     }
 }
 
 class TracksAAPI: Decodable {
     
-    let name: String
-    let url: PreviewUrl
-    var dowloaded: Bool = false
-    var identifier: Int = 0
-    let artist: String
+    var name: String
     
-    enum AttributesKeys: String, CodingKey
+
+    
+    enum CodingKeys: String, CodingKey
     {
         case name = "name"
-        case artist = "artistName"
-        case previews
-    }
-    
-    enum PreviewsKeys: String, CodingKey
-    {
-        case url = "url"
-    }
-    
-    required init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: AttributesKeys.self)
-        name = try values.decode(String.self, forKey: .name)
-        artist = try values.decode(String.self, forKey: .artist)
-        let preview = try values.nestedContainer(keyedBy: PreviewsKeys.self, forKey: .previews)
-        url = try preview.decode(PreviewUrl.self, forKey: .url)
         
+
     }
+
     
-    init(_ name: String, _ url: PreviewUrl, _ identifier: Int, _ artist: String) {
+ 
+    
+    init(_ name: String) {
         self.name = name
-        self.url = url
-        self.identifier = identifier
-        self.artist = artist
+//        self.identifier = identifier
+//        self.artist = artist
     }
 }
 
