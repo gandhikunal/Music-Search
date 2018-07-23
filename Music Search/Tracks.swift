@@ -10,15 +10,15 @@ import Foundation
 
 class SuperWrapper: Decodable {
     var resultCount: Int
-    var results: [Tracks]
+    var results: [TracksItunes]
     
-    init(resultCount: Int, results: [Tracks]) {
+    init(resultCount: Int, results: [TracksItunes]) {
         self.resultCount = resultCount
         self.results = results
     }
 }
 
-class Tracks: Decodable {
+class TracksItunes: Decodable {
     
     let name: String
     let url: URL

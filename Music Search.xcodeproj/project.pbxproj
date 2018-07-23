@@ -14,9 +14,12 @@
 		0C8CC00020F76BF000C800C4 /* TrackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CBFFF20F76BF000C800C4 /* TrackViewCell.swift */; };
 		0C8CC00220F76D6700C800C4 /* Tracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CC00120F76D6700C800C4 /* Tracks.swift */; };
 		0C8CC00720F77E0000C800C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8CC00620F77E0000C800C4 /* Images.xcassets */; };
-		0C8CC00920F77F5300C800C4 /* NetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CC00820F77F5300C800C4 /* NetworkApiManager.swift */; };
+		0C8CC00920F77F5300C800C4 /* NetworkApiManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CC00820F77F5300C800C4 /* NetworkApiManagerTest.swift */; };
 		0C8CC00B20FD11BB00C800C4 /* ApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CC00A20FD11BB00C800C4 /* ApiConstants.swift */; };
 		0C90D3BE2100E717009718C3 /* TracksAppleMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C90D3BD2100E717009718C3 /* TracksAppleMusic.swift */; };
+		0C90D3C021021818009718C3 /* ViewControllerCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C90D3BF21021818009718C3 /* ViewControllerCodable.swift */; };
+		0CDD39392106631E0085FD96 /* DisplayTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CDD39382106631E0085FD96 /* DisplayTrack.swift */; };
+		0CE599A421021AD50075EEA2 /* NetworkApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE599A321021AD50075EEA2 /* NetworkApiManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,9 +32,12 @@
 		0C8CBFFF20F76BF000C800C4 /* TrackViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackViewCell.swift; sourceTree = "<group>"; };
 		0C8CC00120F76D6700C800C4 /* Tracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracks.swift; sourceTree = "<group>"; };
 		0C8CC00620F77E0000C800C4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "../../../HalfTunes-Starter/HalfTunes/Images.xcassets"; sourceTree = "<group>"; };
-		0C8CC00820F77F5300C800C4 /* NetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkApiManager.swift; sourceTree = "<group>"; };
+		0C8CC00820F77F5300C800C4 /* NetworkApiManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkApiManagerTest.swift; sourceTree = "<group>"; };
 		0C8CC00A20FD11BB00C800C4 /* ApiConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiConstants.swift; sourceTree = "<group>"; };
 		0C90D3BD2100E717009718C3 /* TracksAppleMusic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksAppleMusic.swift; sourceTree = "<group>"; };
+		0C90D3BF21021818009718C3 /* ViewControllerCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerCodable.swift; sourceTree = "<group>"; };
+		0CDD39382106631E0085FD96 /* DisplayTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayTrack.swift; sourceTree = "<group>"; };
+		0CE599A321021AD50075EEA2 /* NetworkApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkApiManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +71,8 @@
 			isa = PBXGroup;
 			children = (
 				0C42C85720F66765004B1D83 /* Main.storyboard */,
-				0C8CC00820F77F5300C800C4 /* NetworkApiManager.swift */,
+				0CE599A321021AD50075EEA2 /* NetworkApiManager.swift */,
+				0CDD39382106631E0085FD96 /* DisplayTrack.swift */,
 				0C8CC00A20FD11BB00C800C4 /* ApiConstants.swift */,
 				0C8CBFFF20F76BF000C800C4 /* TrackViewCell.swift */,
 				0C8CBFFD20F7697300C800C4 /* SearchViewController.swift */,
@@ -73,6 +80,7 @@
 				0C90D3BD2100E717009718C3 /* TracksAppleMusic.swift */,
 				0C42C86620F668B6004B1D83 /* TableViewController.swift */,
 				0C42C85F20F6676A004B1D83 /* Info.plist */,
+				0CE599A221021AA00075EEA2 /* testing */,
 				0C42C86520F667E8004B1D83 /* Supporting Files */,
 			);
 			path = "Music Search";
@@ -85,6 +93,15 @@
 				0C42C85320F66765004B1D83 /* AppDelegate.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0CE599A221021AA00075EEA2 /* testing */ = {
+			isa = PBXGroup;
+			children = (
+				0C8CC00820F77F5300C800C4 /* NetworkApiManagerTest.swift */,
+				0C90D3BF21021818009718C3 /* ViewControllerCodable.swift */,
+			);
+			path = testing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,12 +175,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C8CC00B20FD11BB00C800C4 /* ApiConstants.swift in Sources */,
+				0CE599A421021AD50075EEA2 /* NetworkApiManager.swift in Sources */,
 				0C8CBFFE20F7697300C800C4 /* SearchViewController.swift in Sources */,
+				0CDD39392106631E0085FD96 /* DisplayTrack.swift in Sources */,
 				0C42C85420F66765004B1D83 /* AppDelegate.swift in Sources */,
 				0C8CC00220F76D6700C800C4 /* Tracks.swift in Sources */,
+				0C90D3C021021818009718C3 /* ViewControllerCodable.swift in Sources */,
 				0C90D3BE2100E717009718C3 /* TracksAppleMusic.swift in Sources */,
 				0C8CC00020F76BF000C800C4 /* TrackViewCell.swift in Sources */,
-				0C8CC00920F77F5300C800C4 /* NetworkApiManager.swift in Sources */,
+				0C8CC00920F77F5300C800C4 /* NetworkApiManagerTest.swift in Sources */,
 				0C42C86720F668B6004B1D83 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

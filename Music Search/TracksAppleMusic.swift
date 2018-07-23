@@ -9,76 +9,83 @@
 
 import Foundation
 
-class TopLevelResponse: Decodable {
-    var results: Result
-    enum CodingKeys: String, CodingKey
-    {
-        case results = "results"
-    }
-    
-    init(results: Result) {
-        self.results = results
-    }
-}
-
 class Result: Decodable {
-
-    var songs: Song
-    enum CodingKeys: String, CodingKey
-    {
-        case songs = "songs"
-    }
-    init(songs: Song) {
-        self.songs = songs
-    }
-}
-
-class Song: Decodable {
-    var data: [Attributes]
-    enum CodingKeys: String, CodingKey
-    {
-        case data = "data"
-    }
-    init(data: [Attributes]) {
-        self.data = data
-    }
-}
-
-
-class Attributes: Decodable {
-    var attributes: TracksAAPI
-    enum CodingKeys: String, CodingKey
-    {
-        case attributes = "attributes"
-    }
-    init(attributes: TracksAAPI) {
-        self.attributes = attributes
-    }
-}
-
-class TracksAAPI: Decodable {
+    var results: [TrackAppleMusic]
     
+        init(results: [TrackAppleMusic]) {
+            self.results = results
+        }
+    
+        enum CodingKeys: String, CodingKey {
+            case results
+        }
+    
+        enum ResultsCodingKeys: String, CodingKey {
+            case songs
+        }
+    
+        enum SongsCodingKeys: String, CodingKey {
+            case data
+        }
+    
+    convenience required init(from decoder: Decoder) throws {
+        let container = try decoder.container(
+                keyedBy: CodingKeys.self)
+    
+            let results = try container.nestedContainer(keyedBy: ResultsCodingKeys.self, forKey: .results)
+            let songs = try results.nestedContainer(keyedBy: SongsCodingKeys.self, forKey: .songs)
+            let data = try songs.decode([TrackAppleMusic].self, forKey: .data)
+            self.init(results: data)
+        }
+
+}
+
+class TrackAppleMusic: Decodable {
     var name: String
-    
-
-    
-    enum CodingKeys: String, CodingKey
-    {
-        case name = "name"
-        
-
+    var artistName: String
+    var url: URL
+    var identifier: Int = 0
+    enum CodingKeys: String, CodingKey {
+        case attributes
     }
+    
+    enum AttributeCodingKeys: String, CodingKey {
+        case previews
+        case name
+        case artistName
+    }
+    convenience required init(from decoder: Decoder) throws {
+        let container = try decoder.container(
+            keyedBy: CodingKeys.self)
 
+        let attribute = try container.nestedContainer(keyedBy: AttributeCodingKeys.self, forKey: .attributes)
+        let name = try attribute.decode(String.self, forKey: .name)
+        let artistName = try attribute.decode(String.self, forKey: .artistName)
+        let url = try attribute.decode([Url].self, forKey: .previews)
+        self.init(name: name,artistName: artistName, url: url)
+    }
     
- 
-    
-    init(_ name: String) {
+    init(name: String, artistName: String, url: [Url]) {
         self.name = name
-//        self.identifier = identifier
-//        self.artist = artist
+        self.artistName = artistName
+        self.url = (url.first?.url)!
     }
+    
 }
 
-
-
+class Url: Decodable {
+    let url: URL
+    
+    init(url: URL) {
+        self.url = url
+    }
+    enum CodingKeys: String, CodingKey {
+        case url
+    }
+    convenience required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let url = try container.decode(URL.self, forKey: .url)
+        self.init(url: url)
+    }
+}
 

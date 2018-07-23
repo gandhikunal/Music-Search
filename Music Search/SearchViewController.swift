@@ -14,7 +14,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var tracks: [Tracks] = [Tracks]()
+    var tracks: [TracksItunes] = [TracksItunes]()
     let queryService = NetworkApiManager.shared
     var choosenAPI: ApiSelector?
     
@@ -54,16 +54,18 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         searchBar.resignFirstResponder()
         let querystring = searchBar.text
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        queryService.query(term: querystring!,api: choosenAPI!) { tracks , errormessage in
-            if errormessage != nil {
-                print(errormessage!)
-            } else {
+        
+        queryService.queryTrack(term: querystring!, api: choosenAPI!)
+        { (result: ApiResponse<[TracksItunes]>) in
+            switch result {
+            case .sucess(let wrapper):
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                self.tracks = tracks
+                self.tracks = wrapper
                 self.tableView.reloadData()
-                
+            case .failure(let error):
+                print(error)
             }
-            
+
         }
         
     }
@@ -71,16 +73,17 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Table Data Source Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tracks.count
+//        return tracks.count
+        return 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "track cell", for: indexPath) as! TrackViewCell
         
    
-            let track = tracks[indexPath.row]
-            cell.trackName.text = track.name
-       
+//            let track = tracks[indexPath.row]
+//            cell.trackName.text = track.name
+//
         return cell
     }
     
