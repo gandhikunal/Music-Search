@@ -9,15 +9,15 @@
 import Foundation
 
 protocol DisplayableTrack {
-    var artistName: String {get}
+    var signerName: String {get}
     var songName: String {get}
-    var ientifier: Int {get}
-    var url: URL {get}
+    var id: Int {get}
+    var trackurl: URL {get}
 }
 
 
 extension TracksItunes: DisplayableTrack {
-    var artistName: String {
+    var signerName: String {
         return self.artist
     }
     
@@ -25,9 +25,28 @@ extension TracksItunes: DisplayableTrack {
         return self.name
     }
     
-    var ientifier: Int {
+    var id: Int {
         return self.identifier
     }
+    var trackurl: URL {
+        return self.url
+    }
     
+}
+
+extension TrackAppleMusic: DisplayableTrack {
+    var signerName: String {
+        return self.artistName
+    }
     
+    var songName: String {
+        return self.name
+    }
+    
+    var id: Int {
+        return self.identifier
+    }
+    var trackurl: URL {
+        return self.url
+    }
 }

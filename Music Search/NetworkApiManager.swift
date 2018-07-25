@@ -6,10 +6,17 @@
 //
 import Foundation
 
-enum ApiResponse <T: Decodable> {
+enum ApiResponseGeneric <T: Decodable> {
     case sucess(T)
-    case failure(String)
+    case failure(Error)
 }
+
+enum UIResponse <T> {
+      case sucess(T)
+      case failure(Error)
+}
+
+
 class NetworkApiManager {
     
     var defualtSession: URLSession?
@@ -17,62 +24,90 @@ class NetworkApiManager {
     
     static let shared = NetworkApiManager()
     
-    func queryTrack<T: Decodable>(term searchTerm: String, api choosenApi: ApiSelector?, completion: @escaping (ApiResponse<T>) -> ()) {
+    func queryTrack(term searchTerm: String, api choosenApi: ApiSelector?, completion: @escaping (UIResponse<[DisplayableTrack]>) -> ()) {
         let baseUrl = generateURLforAPI(api: choosenApi!, term: searchTerm)
-            query(baseUrl) { (result: ApiResponse<SuperWrapper>) in
+        if (choosenApi!.selectedApi.apiName == "itunes") {
+                query(baseUrl) {     (result: ApiResponseGeneric<SuperWrapper>) in
+                    switch result {
+                    case .sucess(let wrapper):
+                        var startCount = 0
+                        let tracks = wrapper.results
+                        tracks.forEach { (track) in
+                            track.identifier = startCount
+                            startCount = startCount+1
+                        }
+                        DispatchQueue.main.async {
+                            completion(.sucess(tracks))
+                        }
+                        
+                        case .failure(let error):
+                        print(error)
+                        DispatchQueue.main.async {
+                            completion(.failure(error))
+                        }
+                        
+                    }
+                }
+        } else if (choosenApi!.selectedApi.apiName == "applemusic") {
+                query(baseUrl) {     (result: ApiResponseGeneric<Result>) in
                 switch result {
                 case .sucess(let wrapper):
-                    var tracks = wrapper.results
                     var startCount = 0
+                    let tracks = wrapper.results
                     tracks.forEach { (track) in
                         track.identifier = startCount
                         startCount = startCount+1
                     }
-                    completion(.sucess(tracks))
-                    case .failure(let error):
-                    print(error)
-                    completion(.failure(error))
+                    DispatchQueue.main.async {
+                        completion(.sucess(tracks))
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
+                    
+                }
                 }
         }
     }
     
-    func query<T: Decodable>(_ url: URLRequest, completion: @escaping (ApiResponse<T>) -> ()){
-        var errorDescription: String?
+    func query<T: Decodable>(_ url: URLRequest, completion: @escaping (ApiResponseGeneric<T>) -> ()){
+//        var errorDescription: String?
         let task = defualtSession?.dataTask(with: url) { data, response, error in
             
             if let error = error {
-                errorDescription = "Error querying the API"+(error.localizedDescription)
-                    completion(.failure(errorDescription!))
+//                errorDescription = "Error querying the API"+(error.localizedDescription)
+                    completion(.failure(error))
             }
             let response = response as! HTTPURLResponse
             if response.statusCode == 200 {
                 if let data = data {
-                    let r: ApiResponse<T> = self.getJsonSerializedData(data: data)
+                    let r: ApiResponseGeneric<T> = self.getJsonSerializedData(data: data)
                         switch r {
                         case .sucess(let returnValue):
                             completion(.sucess(returnValue))
                         case .failure(let error):
-                            completion(.failure(errorDescription!+error))
+                            completion(.failure(error))
                             
                         }
                     
                 }
             } else {
 
-                    completion(.failure("Error Response Code"+String(describing: response.statusCode)))
+//                    completion(.failure("Error Response Code"+String(describing: response.statusCode)))
             }
             
         }
         task?.resume()
     }
     
-    private func getJsonSerializedData<U: Decodable>(data: Data) -> (ApiResponse<U>) {
+    private func getJsonSerializedData<U: Decodable>(data: Data) -> (ApiResponseGeneric<U>) {
         let decoder = JSONDecoder()
         do {
             let result = try decoder.decode(U.self, from: data)
-            return ApiResponse.sucess(result)
+            return ApiResponseGeneric.sucess(result)
         } catch let error as NSError {
-            return ApiResponse.failure("JSON Decoding Error:"+error.localizedDescription)
+            return ApiResponseGeneric.failure(error)
         }
     }
     

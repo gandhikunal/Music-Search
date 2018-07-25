@@ -14,7 +14,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var tracks: [TracksItunes] = [TracksItunes]()
+    var tracks: [DisplayableTrack] = [DisplayableTrack]()
     let queryService = NetworkApiManager.shared
     var choosenAPI: ApiSelector?
     
@@ -50,17 +50,18 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         searchBar.becomeFirstResponder()
     }
     
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         let querystring = searchBar.text
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         queryService.queryTrack(term: querystring!, api: choosenAPI!)
-        { (result: ApiResponse<[TracksItunes]>) in
+        { (result: UIResponse<[DisplayableTrack]>) in
             switch result {
-            case .sucess(let wrapper):
+            case .sucess(let result):
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                self.tracks = wrapper
+                self.tracks = result
                 self.tableView.reloadData()
             case .failure(let error):
                 print(error)
@@ -73,17 +74,17 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // MARK: - Table Data Source Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return tracks.count
-        return 0
+        return tracks.count
+      
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "track cell", for: indexPath) as! TrackViewCell
         
    
-//            let track = tracks[indexPath.row]
-//            cell.trackName.text = track.name
-//
+            let track = tracks[indexPath.row]
+            cell.trackName.text = track.songName
+
         return cell
     }
     
