@@ -53,13 +53,35 @@ class NetworkApiManager {
                 switch result {
                 case .sucess(let wrapper):
                     var startCount = 0
+                    var tracksAll = [DisplayableTrack]()
                     let tracks = wrapper.results
                     tracks.forEach { (track) in
                         track.identifier = startCount
                         startCount = startCount+1
                     }
-                    DispatchQueue.main.async {
-                        completion(.sucess(tracks))
+                    tracksAll = tracks
+                    let choosenApiApple = ApiSelector.itunes
+                    let baseUrl2 = self.generateURLforAPI(api: choosenApiApple, term: searchTerm)
+                    self.query(baseUrl2) { (resultNew: ApiResponseGeneric<SuperWrapper>) in
+                        switch resultNew {
+                        case .sucess(let wrapperNew):
+                            var startCount = 0
+                            let tracksNew = wrapperNew.results
+                            tracksNew.forEach { (track) in
+                                track.identifier = startCount
+                                startCount = startCount+1
+                            }
+                            print(tracksNew)
+                            tracksAll.append(contentsOf: tracksNew)
+                            print(tracksAll.count)
+                            DispatchQueue.main.async {
+                                completion(.sucess(tracksAll))
+                            }
+                        case .failure(let error):
+                            DispatchQueue.main.async {
+                                completion(.failure(error))
+                            }
+                        }
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
@@ -123,6 +145,7 @@ class NetworkApiManager {
             request = URLRequest(url: (urlComponents?.url!)!)
             tokenString = "Bearer " + tokenString!
             request.setValue(tokenString, forHTTPHeaderField: "Authorization")
+            print(request)
         } else if choosenApi?.selectedApi.apiName == "itunes" {
             urlComponents?.query = "media=music&entity=song&term=\(searchTerm)"
             request = URLRequest(url: (urlComponents?.url!)!)

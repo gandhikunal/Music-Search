@@ -83,5 +83,27 @@
 ////        self.downloadSession = URLSession(configuration: URLSessionConfiguration.background(withIdentifier:
 ////            "background"), delegate: SearchViewController.self(), delegateQueue: nil)
 //    }
+//////}
+//////
+//case .sucess(let wrapper):
+//var startCount = 0
+//let tracks = wrapper.results
+//tracks.forEach { (track) in
+//    track.identifier = startCount
+//    startCount = startCount+1
 //}
-//
+//let choosenApiApple = ApiSelector.itunes
+//let baseUrl2 = self.generateURLforAPI(api: choosenApiApple, term: searchTerm)
+//self.query(baseUrl2) { (resultNew: ApiResponseGeneric<SuperWrapper>) in
+//    switch resultNew {
+//    case .sucess(let wrapperNew):
+//        var startCount = 0
+//        let tracksNew = wrapperNew.results
+//        tracksNew.forEach { (track) in
+//            track.identifier = startCount
+//            startCount = startCount+1
+//        }
+//        print(tracksNew)
+//        DispatchQueue.main.async {
+//            completion(.sucess(tracks))
+//}

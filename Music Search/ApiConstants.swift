@@ -18,7 +18,7 @@ enum ApiSelector {
         case .itunes:
             return ApiConstants(baseUrl: "https://itunes.apple.com/search", apiName: "itunes", userToken: nil)
         case .appleMusic:
-            return ApiConstants(baseUrl: "https://api.music.apple.com/v1/catalog/us/search", apiName: "applemusic", userToken: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlQ2Rk5SWjI3V1oifQ.eyJpc3MiOiI1MlRaQlJCVFlOIiwiaWF0IjoxNTMyNDkyNjQ2LCJleHAiOjE1MzI1MzU4NDZ9.h3jkLQs6klHMKU8h-MwCUQhdaGy4BEW2w6sBYmT8YNXGIlU2RXS57hIMNQ2wmGogZB3KTbRTDR0-WVMHVkGhFA")
+            return ApiConstants(baseUrl: "https://api.music.apple.com/v1/catalog/us/search", apiName: "applemusic", userToken: "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlQ2Rk5SWjI3V1oifQ.eyJpc3MiOiI1MlRaQlJCVFlOIiwiaWF0IjoxNTMyNjExODI2LCJleHAiOjE1MzI2NTUwMjZ9.FE9TUyjApo_ovbi-IWkEYeJmgGAPG-68JCmLf7EhmawJDzWp8Vvk1Th8GJMJrb6v22MQ0E-SSMXhysYud9NGoA")
         }
     }
     
