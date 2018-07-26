@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DisplayableTrack {
+protocol DisplayableTrack: Decodable {
     var signerName: String {get}
     var songName: String {get}
     var id: Int {get}

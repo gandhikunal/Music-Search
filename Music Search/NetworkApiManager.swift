@@ -25,75 +25,53 @@ class NetworkApiManager {
     static let shared = NetworkApiManager()
     
     func queryTrack(term searchTerm: String, api choosenApi: ApiSelector?, completion: @escaping (UIResponse<[DisplayableTrack]>) -> ()) {
-        let baseUrl = generateURLforAPI(api: choosenApi!, term: searchTerm)
-        if (choosenApi!.selectedApi.apiName == "itunes") {
-                query(baseUrl) {     (result: ApiResponseGeneric<SuperWrapper>) in
-                    switch result {
-                    case .sucess(let wrapper):
-                        var startCount = 0
-                        let tracks = wrapper.results
-                        tracks.forEach { (track) in
-                            track.identifier = startCount
-                            startCount = startCount+1
-                        }
-                        DispatchQueue.main.async {
-                            completion(.sucess(tracks))
-                        }
-                        
-                        case .failure(let error):
-                        print(error)
-                        DispatchQueue.main.async {
-                            completion(.failure(error))
-                        }
-                        
-                    }
+        var storedError: Error?
+        var allTracks = [DisplayableTrack]()
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        query(generateURLforAPI(api: ApiSelector.appleMusic, term: searchTerm)) {     (result: ApiResponseGeneric<Result>) in
+            switch result {
+            case .sucess(let wrapper):
+                var startCount = 0
+                let tracks = wrapper.results
+                tracks.forEach { (track) in
+                    track.identifier = startCount
+                    startCount = startCount+1
                 }
-        } else if (choosenApi!.selectedApi.apiName == "applemusic") {
-                query(baseUrl) {     (result: ApiResponseGeneric<Result>) in
-                switch result {
-                case .sucess(let wrapper):
-                    var startCount = 0
-                    var tracksAll = [DisplayableTrack]()
-                    let tracks = wrapper.results
-                    tracks.forEach { (track) in
-                        track.identifier = startCount
-                        startCount = startCount+1
-                    }
-                    tracksAll = tracks
-                    let choosenApiApple = ApiSelector.itunes
-                    let baseUrl2 = self.generateURLforAPI(api: choosenApiApple, term: searchTerm)
-                    self.query(baseUrl2) { (resultNew: ApiResponseGeneric<SuperWrapper>) in
-                        switch resultNew {
-                        case .sucess(let wrapperNew):
-                            var startCount = 0
-                            let tracksNew = wrapperNew.results
-                            tracksNew.forEach { (track) in
-                                track.identifier = startCount
-                                startCount = startCount+1
-                            }
-                            print(tracksNew)
-                            tracksAll.append(contentsOf: tracksNew)
-                            print(tracksAll.count)
-                            DispatchQueue.main.async {
-                                completion(.sucess(tracksAll))
-                            }
-                        case .failure(let error):
-                            DispatchQueue.main.async {
-                                completion(.failure(error))
-                            }
-                        }
-                    }
-                case .failure(let error):
-                    DispatchQueue.main.async {
-                        completion(.failure(error))
-                    }
-                    
-                }
-                }
+                allTracks.append(contentsOf: tracks)
+            case .failure(let error):
+               storedError = error
+            }
+            dispatchGroup.leave()
         }
+        dispatchGroup.enter()
+        query(generateURLforAPI(api: ApiSelector.itunes, term: searchTerm)) {     (result: ApiResponseGeneric<SuperWrapper>) in
+            switch result {
+            case .sucess(let wrapper):
+                var startCount = 0
+                let tracks = wrapper.results
+                tracks.forEach { (track) in
+                    track.identifier = startCount
+                    startCount = startCount+1
+                }
+                allTracks.append(contentsOf: tracks)
+            case .failure(let error):
+                storedError = error
+            }
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            if storedError != nil {
+               completion(.failure(storedError!))
+            } else {
+                completion(.sucess(allTracks))
+            }
+        }
+
     }
     
-    func query<T: Decodable>(_ url: URLRequest, completion: @escaping (ApiResponseGeneric<T>) -> ()){
+    private func query<T: Decodable>(_ url: URLRequest, completion: @escaping (ApiResponseGeneric<T>) -> ()){
 //        var errorDescription: String?
         let task = defualtSession?.dataTask(with: url) { data, response, error in
             
@@ -160,4 +138,6 @@ class NetworkApiManager {
         //            "background"), delegate: SearchViewController.self(), delegateQueue: nil)
     }
 }
+
+
 
