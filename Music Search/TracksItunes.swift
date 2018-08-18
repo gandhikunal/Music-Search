@@ -25,20 +25,24 @@ class TracksItunes: Decodable {
     var dowloaded: Bool = false
     var identifier: Int = 0
     let artist: String
+    var trackId: Int
     
     enum CodingKeys: String, CodingKey
     {
-    case name = "trackName"
-    case artist = "artistName"
-    case url = "previewUrl"
+        case name = "trackName"
+        case artist = "artistName"
+        case url = "previewUrl"
+        case trackId
+        
     
     }
     
-    init(_ name:String, _ url:URL, _ identifier:Int, _ artist: String) {
+    init(_ name:String, _ url:URL, _ identifier:Int, _ artist: String, _ trackId:Int) {
         self.name = name
         self.url = url
         self.identifier = identifier
         self.artist = artist
+        self.trackId = trackId
     }
 }
 

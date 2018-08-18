@@ -8,6 +8,8 @@
 
 import UIKit
 
+var cache = MemoryCache()
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -16,6 +18,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         customizeAppearance()
+        let result = cache.readFromDisk()
+        if result {
+            print("Cache Loaded Sucessfully")
+        }
+//        do {
+//            let cacheDiretoryPath = try FileManager.default.url(for: .cachesDirectory,
+//                                                                in: .userDomainMask,
+//                                                                appropriateFor: nil,
+//                                                                create: false)
+//            let cacheUserDirPath = cacheDiretoryPath.appendingPathComponent("cacheDirectory", isDirectory: true).path
+//            if FileManager.default.fileExists(atPath: cacheUserDirPath) {
+//                let result = cache.readFromDisk()
+//                if !result {
+//                    print("cache could not be loaded")
+//                }
+//            }
+//        }
+//        catch {
+//            print(error.localizedDescription)
+//        }
         return true
     }
 
@@ -25,6 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        let result = cache.writeToDisk()
+        if  !result {
+            print("could not write to cahce")
+        }
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }

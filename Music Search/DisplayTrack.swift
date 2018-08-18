@@ -8,45 +8,39 @@
 
 import Foundation
 
-protocol DisplayableTrack: Decodable {
-    var signerName: String {get}
-    var songName: String {get}
-    var id: Int {get}
-    var trackurl: URL {get}
+class DisplayableTrack: Codable {
+    var signerName: String
+    var songName: String
+    var id: Int
+    var trackId: Int
+    var trackUrl: URL
+    
+    init(signerName: String, songName: String, id: Int, trackId: Int, trackUrl: URL) {
+        self.signerName = signerName
+        self.songName = songName
+        self.id = id
+        self.trackId = trackId
+        self.trackUrl = trackUrl
+    }
 }
 
 
-extension TracksItunes: DisplayableTrack {
-    var signerName: String {
-        return self.artist
+extension TracksItunes {
+    static func convertToDisplayableType(tracks: [TracksItunes]) -> [DisplayableTrack] {
+        var displayTrack = [DisplayableTrack]()
+        tracks.forEach { (track) in
+            displayTrack.append(DisplayableTrack(signerName: track.artist, songName: track.name, id: track.identifier, trackId: track.trackId, trackUrl: track.url))
+        }
+        return displayTrack
     }
-    
-    var songName: String {
-        return self.name
-    }
-    
-    var id: Int {
-        return self.identifier
-    }
-    var trackurl: URL {
-        return self.url
-    }
-    
 }
 
-extension TrackAppleMusic: DisplayableTrack {
-    var signerName: String {
-        return self.artistName
-    }
-    
-    var songName: String {
-        return self.name
-    }
-    
-    var id: Int {
-        return self.identifier
-    }
-    var trackurl: URL {
-        return self.url
+extension TrackAppleMusic {
+    static func convertToDisplayableType(tracks: [TrackAppleMusic]) -> [DisplayableTrack] {
+        var displayTrack = [DisplayableTrack]()
+        tracks.forEach { (track) in
+            displayTrack.append(DisplayableTrack(signerName: track.artistName, songName: track.name, id: track.identifier, trackId: track.trackId, trackUrl: track.url))
+        }
+        return displayTrack
     }
 }

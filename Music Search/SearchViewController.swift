@@ -9,15 +9,17 @@
 import UIKit
 import Foundation
 
+let webService = GenericWebService.shared
+
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, URLSessionDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     var tracks: [DisplayableTrack] = [DisplayableTrack]()
-    let queryService = NetworkApiManager.shared
-    var choosenAPI: ApiSelector?
     
+    var choosenAPI: ApiSelector?
+    let queryService = NetworkApiManager()
     
     
     override func viewDidLoad() {

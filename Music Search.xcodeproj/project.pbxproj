@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C063624210ADE8B0059E1B3 /* GenericWebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C063623210ADE8B0059E1B3 /* GenericWebService.swift */; };
 		0C42C85420F66765004B1D83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C42C85320F66765004B1D83 /* AppDelegate.swift */; };
 		0C42C85920F66765004B1D83 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0C42C85720F66765004B1D83 /* Main.storyboard */; };
 		0C42C86720F668B6004B1D83 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C42C86620F668B6004B1D83 /* TableViewController.swift */; };
+		0C59A5F5210C53C40050170D /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C59A5F4210C53C40050170D /* CacheManager.swift */; };
 		0C8CBFFE20F7697300C800C4 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CBFFD20F7697300C800C4 /* SearchViewController.swift */; };
 		0C8CC00020F76BF000C800C4 /* TrackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CBFFF20F76BF000C800C4 /* TrackViewCell.swift */; };
-		0C8CC00220F76D6700C800C4 /* Tracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CC00120F76D6700C800C4 /* Tracks.swift */; };
+		0C8CC00220F76D6700C800C4 /* TracksItunes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CC00120F76D6700C800C4 /* TracksItunes.swift */; };
 		0C8CC00720F77E0000C800C4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0C8CC00620F77E0000C800C4 /* Images.xcassets */; };
 		0C8CC00920F77F5300C800C4 /* NetworkApiManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CC00820F77F5300C800C4 /* NetworkApiManagerTest.swift */; };
 		0C8CC00B20FD11BB00C800C4 /* ApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C8CC00A20FD11BB00C800C4 /* ApiConstants.swift */; };
@@ -23,14 +25,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C063623210ADE8B0059E1B3 /* GenericWebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericWebService.swift; sourceTree = "<group>"; };
 		0C42C85020F66765004B1D83 /* Music Search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Music Search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C42C85320F66765004B1D83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0C42C85820F66765004B1D83 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		0C42C85F20F6676A004B1D83 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0C42C86620F668B6004B1D83 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
+		0C59A5F4210C53C40050170D /* CacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		0C8CBFFD20F7697300C800C4 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		0C8CBFFF20F76BF000C800C4 /* TrackViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackViewCell.swift; sourceTree = "<group>"; };
-		0C8CC00120F76D6700C800C4 /* Tracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracks.swift; sourceTree = "<group>"; };
+		0C8CC00120F76D6700C800C4 /* TracksItunes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TracksItunes.swift; sourceTree = "<group>"; };
 		0C8CC00620F77E0000C800C4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "../../../HalfTunes-Starter/HalfTunes/Images.xcassets"; sourceTree = "<group>"; };
 		0C8CC00820F77F5300C800C4 /* NetworkApiManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkApiManagerTest.swift; sourceTree = "<group>"; };
 		0C8CC00A20FD11BB00C800C4 /* ApiConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiConstants.swift; sourceTree = "<group>"; };
@@ -72,11 +76,13 @@
 			children = (
 				0C42C85720F66765004B1D83 /* Main.storyboard */,
 				0CE599A321021AD50075EEA2 /* NetworkApiManager.swift */,
+				0C59A5F4210C53C40050170D /* CacheManager.swift */,
+				0C063623210ADE8B0059E1B3 /* GenericWebService.swift */,
 				0CDD39382106631E0085FD96 /* DisplayTrack.swift */,
 				0C8CC00A20FD11BB00C800C4 /* ApiConstants.swift */,
 				0C8CBFFF20F76BF000C800C4 /* TrackViewCell.swift */,
 				0C8CBFFD20F7697300C800C4 /* SearchViewController.swift */,
-				0C8CC00120F76D6700C800C4 /* Tracks.swift */,
+				0C8CC00120F76D6700C800C4 /* TracksItunes.swift */,
 				0C90D3BD2100E717009718C3 /* TracksAppleMusic.swift */,
 				0C42C86620F668B6004B1D83 /* TableViewController.swift */,
 				0C42C85F20F6676A004B1D83 /* Info.plist */,
@@ -174,16 +180,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C59A5F5210C53C40050170D /* CacheManager.swift in Sources */,
 				0C8CC00B20FD11BB00C800C4 /* ApiConstants.swift in Sources */,
 				0CE599A421021AD50075EEA2 /* NetworkApiManager.swift in Sources */,
 				0C8CBFFE20F7697300C800C4 /* SearchViewController.swift in Sources */,
 				0CDD39392106631E0085FD96 /* DisplayTrack.swift in Sources */,
 				0C42C85420F66765004B1D83 /* AppDelegate.swift in Sources */,
-				0C8CC00220F76D6700C800C4 /* Tracks.swift in Sources */,
+				0C8CC00220F76D6700C800C4 /* TracksItunes.swift in Sources */,
 				0C90D3C021021818009718C3 /* ViewControllerCodable.swift in Sources */,
 				0C90D3BE2100E717009718C3 /* TracksAppleMusic.swift in Sources */,
 				0C8CC00020F76BF000C800C4 /* TrackViewCell.swift in Sources */,
 				0C8CC00920F77F5300C800C4 /* NetworkApiManagerTest.swift in Sources */,
+				0C063624210ADE8B0059E1B3 /* GenericWebService.swift in Sources */,
 				0C42C86720F668B6004B1D83 /* TableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
